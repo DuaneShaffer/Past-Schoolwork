@@ -1,0 +1,188 @@
+%!
+
+% Duane Shaffer
+% CS 372 HW 4
+% Source for HW 4
+% Spring 2018
+
+% Based on code by Peter Weingartner (www.tailrecursive.org)
+% Original code distributed under Creative Commons License 2.5 
+% http://creativecommons.org/licenses/by-nc-sa/2.5/ 
+
+% Each exercise is on its own numbered page
+
+
+% Draws a one square inch box and inch in from the bottom left
+
+/inch {72 mul} def	% Convert inches->points (1/72 inch)
+
+newpath			% Start a new path
+1 inch 1 inch moveto	% an inch in from the lower left
+2 inch 1 inch lineto	% bottom side
+2 inch 2 inch lineto	% right side
+1 inch 2 inch lineto	% top side
+stroke			% Draw the box on the paper
+showpage		% We're done... eject the page
+
+
+% Example of rotation... draws 36 lines in a circular pattern
+
+0 10 360 {              % Go from 0 to 360 degrees in 10 degree steps
+  newpath               % Start a new path
+
+  gsave                 % Keep rotations temporary
+    144 144 moveto
+    dup                 % Place a second copy of the for loop index on the stack
+    rotate              % Rotate by degrees on stack from 'for'
+    72 add 0 rlineto    % x = 72 + index; y = 0
+    stroke
+  grestore              % Get back the unrotated state
+
+} for                   % Iterate over angles
+
+showpage
+
+% Draw a box at 72, 72 using translate
+
+% operator box: xcoord ycoord box -
+% Creates one inch box at xcoord, ycoord
+/box {
+   newpath
+   moveto
+   72 0 rlineto
+   0 72 rlineto
+   -72 0 rlineto
+   closepath
+} def
+
+0 72 144 {                    % For x = 0 to 144
+    0 72 144 {                % For y = 0 to 144
+        1 index               % Copy x for translate
+        exch                  % Place x on top of the stack
+        gsave                 % Preserve the old coordinates
+            translate         % Set origin to (0-144, 0-144)
+            0 0 box stroke    % Draw the box at the new origin
+        grestore              % Restore the old coordinates
+    } for
+} for
+
+showpage
+
+
+% Demonstrate shading and width in drawing lines and filling shapes
+
+% Define an operator box which builds a path for a one inch square box
+% Note that box does not draw or fill the box.
+
+/box {
+  newpath
+  moveto                                % Current point is on stack
+  0 72 rlineto                          % Left
+  72 0 rlineto                          % Top
+  0 -72 rlineto                         % Right
+  closepath                             % Bottom
+} def
+
+/smallerbox {
+  newpath
+  moveto                                % Current point is on stack
+  pop
+  0 69 rlineto                          % Left
+  69 0 rlineto                          % Top
+  0 -69 rlineto                         % Right
+  closepath                             % Bottom
+} def
+
+
+0 setgray                               % 100% black
+1 setlinewidth                          % One point thick lines
+72 72 moveto 72 144 lineto stroke       % Draw a one inch line
+
+gsave                                   % Save a copy of the current settings
+  0.5 setgray                           % 50% black
+  10 setlinewidth                       % 10 point wide lines
+  144 72 moveto 144 144 lineto stroke   % Draw a one inch wide line
+  216 72 box                            % Build a square path...
+  0.35 setgray                          %   make it a little darker...
+  fill                                  %   and fill it.
+grestore                                % Go back to the original settings
+10 14 80 {
+    gsave
+    3 setlinewidth                          % Make the box lines wider
+    300 72 smallerbox stroke                       % Draw a black box
+    grestore
+} for
+
+showpage
+
+
+% Demonstrate shading and width in drawing lines and filling shapes
+
+% Define an operator box which builds a path for a one inch square box
+% Note that box does not draw or fill the box.
+
+/box {
+  newpath
+  moveto                                % Current point is on stack
+  0 72 rlineto                          % Left
+  72 0 rlineto                          % Top
+  0 -72 rlineto                         % Right
+  closepath                             % Bottom
+} def
+
+/smallerbox {
+  newpath
+  moveto                                % Current point is on stack
+  rotate
+  0 69 rlineto                          % Left
+  69 0 rlineto                          % Top
+  0 -69 rlineto                         % Right
+  closepath                             % Bottom
+} def
+
+
+0 setgray                               % 100% black
+1 setlinewidth                          % One point thick lines
+72 72 moveto 72 144 lineto stroke       % Draw a one inch line
+
+gsave                                   % Save a copy of the current settings
+  0.5 setgray                           % 50% black
+  10 setlinewidth                       % 10 point wide lines
+  144 72 moveto 144 144 lineto stroke   % Draw a one inch wide line
+  216 72 box                            % Build a square path...
+  0.35 setgray                          %   make it a little darker...
+  fill                                  %   and fill it.
+grestore                                % Go back to the original settings
+10 14 80 {
+    gsave
+    3 setlinewidth                          % Make the box lines wider
+    300 72 smallerbox stroke                       % Draw a black box
+    grestore
+} for
+
+showpage
+
+/eye {
+  newpath 
+  0 30 360 {
+    3 copy
+    pop
+    72 0 4 index arc
+    closepath
+    stroke
+    pop
+  } for 
+} def
+
+
+180 360 eye
+360 360 eye
+
+270 225 90 180 0 arc
+closepath 
+stroke
+
+225 270 270 0 360 arc
+stroke
+
+showpage
