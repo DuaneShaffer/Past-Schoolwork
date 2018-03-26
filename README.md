@@ -11,8 +11,14 @@ CS 372 Project 1 - Battleship
 https://github.com/csgray/cs372-battleship
 
 Classes associated with folders:
+
 CS202 - Computer Science 2
+
 CS311 - Data Structures and Algorithms
+
 CS321 - Operating Systems
+
 CS331 - Programming Languages
+
 CS372 - Software Construction
+
