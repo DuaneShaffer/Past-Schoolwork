@@ -163,6 +163,10 @@ grestore                                % Go back to the original settings
 showpage
 
 /eye {
+  gsave
+  translate
+  rotate
+  0 0 
   newpath 
   0 30 360 {
     3 copy
@@ -172,11 +176,13 @@ showpage
     stroke
     pop
   } for 
+  grestore
 } def
 
 
-180 360 eye
-360 360 eye
+-45 180 360 eye
+-135 360 360 eye
+
 
 270 225 90 180 0 arc
 closepath 
