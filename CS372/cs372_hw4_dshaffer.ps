@@ -162,6 +162,8 @@ grestore                                % Go back to the original settings
 
 showpage
 
+
+%An eye takes: angle of rotation, x coord, y coord
 /eye {
   gsave
   translate
@@ -173,9 +175,9 @@ showpage
     pop
     72 0 4 index arc
     closepath
-    stroke
     pop
   } for 
+  stroke
   grestore
 } def
 
